@@ -1,0 +1,26 @@
+﻿<Window x:Class="homework2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:homework2"
+        mc:Ignorable="d"
+        Title="homework2" MinHeight="450" Height="450" MinWidth="800" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <local:Click x:Key="Click"/>
+        </Grid.Resources>
+        <DockPanel Grid.Row="0">
+            <Button Command="{Binding Source={StaticResource Click} }" Content="随机生成" Width="260" Height="110" FontSize="30"></Button>
+        </DockPanel>
+        <DockPanel Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="200">
+                <TextBlock Text="{Binding Source={StaticResource Click}, Path=Result, Mode=OneWay}" TextAlignment="Center"/>
+            </ScrollViewer>
+        </DockPanel>
+    </Grid>
+</Window>
