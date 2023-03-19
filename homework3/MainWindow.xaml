@@ -1,0 +1,32 @@
+﻿<Window x:Class="homework3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:homework3"
+        mc:Ignorable="d"
+        Title="homework3" Height="450" Width="800" MinHeight="450" MinWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <local:Clock x:Key="Clock"/>
+        </Grid.Resources>
+        <TextBlock Text="{Binding Source={StaticResource Clock}, Mode=OneWay, Path=TimeString}" FontSize="90" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ScrollViewer CanContentScroll="True" Grid.Row="1" VerticalScrollBarVisibility="Auto" >
+            <TextBlock FontSize="14" Text="{Binding Source={StaticResource Clock}, Mode=OneWay, Path=OutputString}" TextAlignment="Center"/>
+        </ScrollViewer>
+        <DockPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 10pt">
+                <TextBlock Text="请输入设置的闹钟倒计时: " FontSize="20"/>
+                <TextBox Name="Input" MaxLines="1" MaxLength="3" MinWidth="24pt" FontSize="20" Margin="3pt,0"/>
+                <TextBlock Text="秒" FontSize="20"/>
+            </StackPanel>
+            <Button Command="{Binding Source={StaticResource Clock}}" CommandParameter="{Binding ElementName=Input, Path=Text}" Content="设置倒计时" FontSize="24" Width="160" Height="50" DockPanel.Dock="Top"/>
+            <TextBlock Margin="0, 4pt" DockPanel.Dock="Bottom" Text="输入非法" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="Red" Visibility="{Binding Source={StaticResource Clock}, Path=IsErr, Mode=OneWay}"/>
+        </DockPanel>
+    </Grid>
+</Window>
