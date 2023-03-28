@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace homework4
@@ -16,6 +11,17 @@ namespace homework4
         public event PropertyChangedEventHandler? PropertyChanged;
         public event EventHandler? CanExecuteChanged;
         private string _result;
+        private bool _running;
+        private event Func<object?, Task> ExecuteEvent;
+        private event Predicate<object?>? CanExecuteEvent;
+
+        public TextMarge(Func<object?, Task> executeEvent, Predicate<object?>? canExecuteEvent = null)
+        {
+            ExecuteEvent = executeEvent;
+            CanExecuteEvent = canExecuteEvent;
+            _result = string.Empty;
+            _running = false;
+        }
 
         public string Result
         {
@@ -32,49 +38,36 @@ namespace homework4
 
         public bool CanExecute(object? parameter)
         {
-            if (parameter is null)
-                return false;
-            var textSelects = (object[])parameter;
-            if (textSelects.Length != 2)
-                return false;
-            return ((TextSelect)textSelects[0]).IsExist == Visibility.Hidden && ((TextSelect)textSelects[1]).IsExist == Visibility.Hidden;
+            return !_running && (CanExecuteEvent is null || CanExecuteEvent.Invoke(parameter));
         }
 
         public async void Execute(object? parameter)
         {
-            
-        }
-
-        private async Task<string> DoTextMarge(string path1, string path2, string outFilePath)
-        {
+            _running = true;
+            OnCanExecuteChanged();
             try
             {
-                var file1 = File.OpenText(path1);
-                var file2 = File.OpenText(path2);
-                var file1Text = await file1.ReadToEndAsync();
-                var file2Text = await file2.ReadToEndAsync();
-
-                var directoryPath = Path.GetDirectoryName(outFilePath);
-                if (Directory.Exists(directoryPath))
-                    Directory.CreateDirectory(directoryPath);
-
-                var fileOut = File.CreateText(outFilePath);
-                await fileOut.WriteLineAsync("文件 1 内容如下：");
-                await fileOut.WriteAsync(file1Text);
-                await fileOut.WriteLineAsync("\n文件 2 内容如下");
-                await fileOut.WriteAsync(file2Text);
-
-                return string.Empty;
+                await ExecuteEvent(parameter).WaitAsync(TimeSpan.FromSeconds(10));
             }
-            catch (Exception ex)
+            catch (TimeoutException)
             {
-                return ex.Message;
+                Result = "合并失败，10 秒后仍无结果";
+            }
+            finally
+            {
+                _running = false;
+                OnCanExecuteChanged();
             }
         }
-        
+
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void OnCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

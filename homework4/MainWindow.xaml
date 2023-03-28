@@ -6,18 +6,15 @@
         xmlns:local="clr-namespace:homework4"
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="450" MinWidth="800" Height="450" Width="800">
+    <Window.DataContext>
+        <local:ViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.Resources>
-            <local:TextSelect x:Key="TextSelect1"/>
-            <local:TextSelect x:Key="TextSelect2"/>
-            <local:TextMarge x:Key="TextMarge"/>
-            <local:TextSelectArrayConverter x:Key="TextSelectArrayConverter"/>
-        </Grid.Resources>
         <StackPanel VerticalAlignment="Center" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 10">
             <TextBlock Text="将两个文本文件合并" FontSize="50" HorizontalAlignment="Center"/>
             <TextBlock Text="合并后的文件存放在程序目录的 Data 文件夹下" FontSize="20" HorizontalAlignment="Center" Margin="0, 20"/>
@@ -28,29 +25,22 @@
             </StackPanel.Resources>
             <StackPanel Margin="0, 20, 0, 5" Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="请输入第一个文件的路径：" Margin="5, 0"/>
-                <TextBox MaxLines="1" MinWidth="256" Text="{Binding Source={StaticResource TextSelect1}, Mode=TwoWay, Path=Path}" x:Name="TextBox1" Margin="5, 0"/>
-                <Button Command="{Binding Source={StaticResource TextSelect1}}" Content="选择文件" Width="75" Margin="5, 0"/>
+                <TextBox MaxLines="1" MinWidth="256" Text="{Binding Mode=TwoWay, Path=TextSelect1.Path}" Margin="5, 0"/>
+                <Button Command="{Binding Path=TextSelect1}" Content="选择文件" Width="75" Margin="5, 0"/>
             </StackPanel>
-            <TextBlock Visibility="{Binding Source={StaticResource TextSelect1}, Path=IsExist, Mode=OneWay}" Margin="0, 5" Text="文件位置错误" Foreground="Red" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Visibility="{Binding Path=TextSelect1.IsExist, Mode=OneWay}" Margin="0, 5" Text="文件位置错误" Foreground="Red" HorizontalAlignment="Center"></TextBlock>
             <StackPanel Margin="0, 20, 0, 5" Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="请输入第二个文件的路径：" Margin="5, 0"/>
-                <TextBox MaxLines="1" MinWidth="256" Text="{Binding Source={StaticResource TextSelect2}, Mode=TwoWay, Path=Path}" x:Name="TextBox2" Margin="5, 0"/>
-                <Button Command="{Binding Source={StaticResource TextSelect2}}" Content="选择文件" Width="75" Margin="5, 0"/>
+                <TextBox MaxLines="1" MinWidth="256" Text="{Binding Mode=TwoWay, Path=TextSelect2.Path}" x:Name="TextBox2" Margin="5, 0"/>
+                <Button Command="{Binding Path=TextSelect2}" Content="选择文件" Width="75" Margin="5, 0"/>
             </StackPanel>
-            <TextBlock Visibility="{Binding Source={StaticResource TextSelect2}, Path=IsExist, Mode=OneWay}" Margin="0, 5" Text="文件位置错误" Foreground="Red" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Visibility="{Binding Path=TextSelect2.IsExist, Mode=OneWay}" Margin="0, 5" Text="文件位置错误" Foreground="Red" HorizontalAlignment="Center"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" >
             <StackPanel.Resources>
             </StackPanel.Resources>
-            <Button Command="{Binding Source={StaticResource TextMarge}}" FontSize="40" Content="开始合并" Width="200" Height="80" Margin="0, 0, 0, 20">
-                <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource TextSelectArrayConverter}">
-                        <Binding Source="{StaticResource TextSelect1}"/>
-                        <Binding Source="{StaticResource TextSelect2}"></Binding>
-                    </MultiBinding>
-                </Button.CommandParameter>
-            </Button>
-            <TextBlock TextAlignment="Center" FontSize="16" Text="wwww" Visibility="Visible"/>
+            <Button Command="{Binding Path=TextMarge}" FontSize="40" Content="开始合并" Width="200" Height="80" Margin="0, 0, 0, 12"/>
+            <TextBlock TextAlignment="Center" FontSize="20" Text="{Binding Path=TextMarge.Result, Mode=OneWay}" Visibility="Visible"/>
         </StackPanel>
     </Grid>
 </Window>

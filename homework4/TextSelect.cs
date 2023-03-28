@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
@@ -17,6 +13,9 @@ namespace homework4
         private string _path;
         private Visibility _isExist;
 
+        // 定义 Path 变更事件
+        public Action<string>? PathChanged;
+
         public string Path
         {
             get => _path;
@@ -27,6 +26,7 @@ namespace homework4
                     _path = value;
                     OnPropertyChanged();
                     IsExist = File.Exists(_path) ? Visibility.Hidden : Visibility.Visible;
+                    PathChanged?.Invoke(_path);
                 }
             }
         }
@@ -55,14 +55,6 @@ namespace homework4
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-            field = value;
-            OnPropertyChanged(propertyName);
-            return true;
         }
 
         public event EventHandler? CanExecuteChanged;
