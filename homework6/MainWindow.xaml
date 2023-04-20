@@ -1,0 +1,54 @@
+﻿<Window x:Class="homework6.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:homework6"
+        mc:Ignorable="d"
+        Title="homework6" MinHeight="600" Height="600" MinWidth="450" Width="450"
+        FontSize="30">
+    <Window.DataContext>
+        <local:ViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Border Background="AliceBlue" Grid.Row="0" Margin="10" BorderBrush="SkyBlue" BorderThickness="1" CornerRadius="5">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Path=DisplayText, Mode=OneWay}" TextAlignment="Center" TextWrapping="Wrap"/>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Margin="3" Grid.Row="0" Grid.Column="0" Content="7" Command="{Binding Path=NumberButton[7]}"/>
+            <Button Margin="3" Grid.Row="0" Grid.Column="1" Content="8" Command="{Binding Path=NumberButton[8]}"/>
+            <Button Margin="3" Grid.Row="0" Grid.Column="2" Content="9" Command="{Binding Path=NumberButton[9]}"/>
+            <Button Margin="3" Grid.Row="0" Grid.Column="3" Content="+" Command="{Binding Path=OperatorButton[0]}"/>
+            <Button Margin="3" Grid.Row="1" Grid.Column="0" Content="4" Command="{Binding Path=NumberButton[4]}"/>
+            <Button Margin="3" Grid.Row="1" Grid.Column="1" Content="5" Command="{Binding Path=NumberButton[5]}"/>
+            <Button Margin="3" Grid.Row="1" Grid.Column="2" Content="6" Command="{Binding Path=NumberButton[6]}"/>
+            <Button Margin="3" Grid.Row="1" Grid.Column="3" Content="-" Command="{Binding Path=OperatorButton[1]}"/>
+            <Button Margin="3" Grid.Row="2" Grid.Column="0" Content="1" Command="{Binding Path=NumberButton[1]}"/>
+            <Button Margin="3" Grid.Row="2" Grid.Column="1" Content="2" Command="{Binding Path=NumberButton[2]}"/>
+            <Button Margin="3" Grid.Row="2" Grid.Column="2" Content="3" Command="{Binding Path=NumberButton[3]}"/>
+            <Button Margin="3" Grid.Row="2" Grid.Column="3" Content="*" Command="{Binding Path=OperatorButton[2]}"/>
+            <Button Margin="3" Grid.Row="3" Grid.Column="0" Content="0" Command="{Binding Path=NumberButton[0]}"/>
+            <Button Margin="3" Grid.Row="3" Grid.Column="1" Content="=" Command="{Binding Path=GetSumButton}"/>
+            <Button Margin="3" Grid.Row="3" Grid.Column="2" Content="AC" Command="{Binding Path=ResetButton}"/>
+            <Button Margin="3" Grid.Row="3" Grid.Column="3" Content="\" Command="{Binding Path=OperatorButton[3]}"/>
+        </Grid>
+    </Grid>
+</Window>
