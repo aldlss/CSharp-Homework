@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "homework7": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "BING_SEARCH_V7_SUBSCRIPTION_KEY": "YOUR_KEY",
+        "SOGOU_COOKIE": "YOUR_SOGOU_COOKIE"
+      }
+    }
+  }
+}
