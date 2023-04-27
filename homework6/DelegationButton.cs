@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace homework5
+namespace homework6
 {
     internal class DelegationButton : ICommand
     {
