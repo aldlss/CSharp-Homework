@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "homework8": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "WORDS_DB_PATH": "F:\\code\\homework\\softwareStructBase\\homework8\\words.db"
+      }
+    }
+  }
+}
