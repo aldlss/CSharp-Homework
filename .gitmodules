@@ -1,0 +1,3 @@
+[submodule "chen-bot"]
+	path = chen-bot
+	url = https://gitee.com/aldlss/chen-bot.git
